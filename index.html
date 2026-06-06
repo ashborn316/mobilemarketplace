@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MobileMarket - Buy & Sell New and Used Cellphones</title>
+  <meta name="description" content="Explore thousands of new and used cellphones for sale. Best prices on iPhones, Samsung, and more. Sell your phone in seconds.">
+  <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+
+  <!-- Premium Header -->
+  <header>
+    <a href="#" class="logo-section" id="logoLink">
+      <div class="logo-icon">C</div>
+      <div class="logo-text">Mobile<span>Market</span></div>
+    </a>
+    
+    <div class="search-container">
+      <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search for a mobile phone, model or brand...">
+    </div>
+    
+    <div class="header-actions">
+      <button class="btn-sell" id="btnSellPhone">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+        </svg>
+        Sell Phone
+      </button>
+      <button class="btn-icon" title="Notifications" id="btnNotifications">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"></path>
+        </svg>
+      </button>
+      <button class="btn-icon" title="Messages" id="btnMessages" style="position: relative;">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+        </svg>
+        <span class="badge" id="chatBadge" style="display: none;"></span>
+      </button>
+      <button class="btn-icon" title="Profile" id="btnProfile">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    
+    <!-- Filters Bar -->
+    <section class="filters-bar">
+      <div class="filters-group">
+        <select class="filter-select" id="filterCategory">
+          <option value="all">Mobile Phones</option>
+          <option value="apple">Apple iPhone</option>
+          <option value="samsung">Samsung</option>
+          <option value="other">Other Brands</option>
+        </select>
+        
+        <select class="filter-select" id="filterSort">
+          <option value="best">Sort: Best Match</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="recent">Recently Added</option>
+        </select>
+        
+        <select class="filter-select" id="filterModel">
+          <option value="all">Model</option>
+          <option value="iPhone 15">iPhone 15 Series</option>
+          <option value="iPhone 14">iPhone 14 Series</option>
+          <option value="iPhone 12">iPhone 12 Series</option>
+          <option value="iPhone XS">iPhone XS Series</option>
+        </select>
+        
+        <select class="filter-select" id="filterStorage">
+          <option value="all">Storage</option>
+          <option value="128gb">128GB</option>
+          <option value="256gb">256GB</option>
+          <option value="512gb">512GB</option>
+          <option value="1tb">1TB</option>
+        </select>
+        
+        <select class="filter-select" id="filterCondition">
+          <option value="all">Condition</option>
+          <option value="Brand New">Brand New</option>
+          <option value="Like New">Like New</option>
+          <option value="Lightly Used">Lightly Used</option>
+          <option value="Well Used">Well Used</option>
+        </select>
+      </div>
+      
+      <div class="save-search-container">
+        <span class="save-search-label">Save this search</span>
+        <label class="switch">
+          <input type="checkbox" id="saveSearchToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Results Header -->
+    <section class="results-header">
+      <h1 class="results-title" id="resultsTitle">10,000+ New and Used Cellphones for Sale in the Philippines | MobileMarket</h1>
+      <p class="results-description">Explore premium options for mobile phones for sale. Find verified listings with detailed specifications and secure local pickup options.</p>
+    </section>
+
+    <!-- Listings Grid -->
+    <section class="listings-grid" id="listingsGrid">
+      <!-- Cards will be dynamically inserted here via JS -->
+    </section>
+  </main>
+
+  <!-- Sell Phone Modal -->
+  <div class="modal-overlay" id="sellModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">List a Phone for Sale</h2>
+        <button class="btn-close-modal" id="btnCloseSellModal">&times;</button>
+      </div>
+      <form id="sellForm">
+        <div class="form-group">
+          <label for="phoneTitle">Listing Title</label>
+          <input type="text" id="phoneTitle" required placeholder="e.g. iPhone 15 Pro Max 256GB Titanium Blue">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phoneBrand">Brand</label>
+            <select id="phoneBrand" required>
+              <option value="apple">Apple</option>
+              <option value="samsung">Samsung</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="phonePrice">Price (PHP)</label>
+            <input type="number" id="phonePrice" required placeholder="e.g. 35000">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phoneStorage">Storage</label>
+            <select id="phoneStorage" required>
+              <option value="128gb">128GB</option>
+              <option value="256gb">256GB</option>
+              <option value="512gb">512GB</option>
+              <option value="1tb">1TB</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="phoneCondition">Condition</label>
+            <select id="phoneCondition" required>
+              <option value="Brand New">Brand New</option>
+              <option value="Like New">Like New</option>
+              <option value="Lightly Used">Lightly Used</option>
+              <option value="Well Used">Well Used</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phoneSeller">Your Name</label>
+          <input type="text" id="phoneSeller" required placeholder="e.g. Juan Dela Cruz">
+        </div>
+        
+        <div class="form-group">
+          <label for="phoneImage">Mock Image Selection</label>
+          <select id="phoneImage" required>
+            <option value="assets/iphone15.png">Blue Titanium iPhone (iPhone 15 style)</option>
+            <option value="assets/iphone14.png">Purple iPhone (iPhone 14 style)</option>
+            <option value="assets/iphone12.png">Boxed iPhone (iPhone 12 style)</option>
+            <option value="assets/iphonexs.png">Case Covered iPhone (XS Max style)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="phoneDesc">Description</label>
+          <textarea id="phoneDesc" rows="3" placeholder="Describe your phone's functionality, inclusions, issues if any..." required></textarea>
+        </div>
+        
+        <div class="form-footer">
+          <button type="button" class="btn-secondary" id="btnCancelSell">Cancel</button>
+          <button type="submit" class="btn-primary">Post Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-container detail-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Product Details</h2>
+        <button class="btn-close-modal" id="btnCloseDetailModal">&times;</button>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-image-sec">
+          <img id="detailImage" src="" alt="Phone Detail Image">
+        </div>
+        <div class="detail-info-sec">
+          <div>
+            <h3 id="detailTitle" style="font-size: 1.6rem; margin-bottom: 0.5rem;"></h3>
+            <div id="detailPrice" style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;"></div>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+              <span style="color: var(--text-secondary);">Condition</span>
+              <span id="detailCondition" style="font-weight: 600;"></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+              <span style="color: var(--text-secondary);">Storage</span>
+              <span id="detailStorage" style="font-weight: 600; text-transform: uppercase;"></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+              <span style="color: var(--text-secondary);">Seller</span>
+              <span id="detailSeller" style="font-weight: 600;"></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+              <span style="color: var(--text-secondary);">Posted</span>
+              <span id="detailPosted" style="font-weight: 600;"></span>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Description</h4>
+            <p id="detailDesc" style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.6;"></p>
+          </div>
+
+          <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <button class="btn-secondary" style="flex: 1; padding: 0.9rem;" id="btnChatSeller">Chat with Seller</button>
+            <button class="btn-primary" style="flex: 1; padding: 0.9rem;" id="btnBuyNow">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Toast -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span class="toast-message" id="toastMessage">Search saved successfully!</span>
+  </div>
+
+  <!-- Live Chat Widget -->
+  <div class="chat-widget" id="chatWidget">
+    <!-- Chat Header -->
+    <div class="chat-widget-header" id="chatWidgetHeader">
+      <div class="chat-header-info">
+        <span class="chat-header-title">Messages</span>
+        <span class="badge" id="chatWidgetBadge" style="display: none;">0</span>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-btn-icon" id="btnExpandChat" title="Expand/Collapse">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6h16.5M3.75 3.75h16.5v16.5H3.75V3.75z" />
+          </svg>
+        </button>
+        <button class="chat-btn-icon" id="btnMinimizeChat" title="Minimize">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+          </svg>
+        </button>
+        <button class="chat-btn-icon" id="btnCloseChat" title="Close">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Body -->
+    <div class="chat-widget-body">
+      <!-- Sidebar / Conversations list -->
+      <div class="chat-sidebar" id="chatSidebar">
+        <div class="chat-sidebar-search">
+          <input type="text" id="chatSearchInput" placeholder="Search chats...">
+        </div>
+        <div class="chat-conversations" id="chatConversationsList">
+          <!-- Active conversations will be inserted here -->
+        </div>
+      </div>
+
+      <!-- Active Chat Window -->
+      <div class="chat-main" id="chatMain">
+        <!-- Chat Area Head (shows when a conversation is active) -->
+        <div class="chat-active-header" id="chatActiveHeader" style="display: none;">
+          <button class="chat-btn-back" id="btnChatBack" title="Back to conversations">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <div class="chat-active-seller">
+            <div class="seller-avatar" id="activeChatAvatar"></div>
+            <div class="active-seller-details">
+              <span class="active-seller-name" id="activeChatName">Christian Ramirez</span>
+              <span class="active-seller-status" id="activeChatStatus">Online</span>
+            </div>
+          </div>
+          <div class="active-item-shortcut" id="activeItemShortcut" title="View Product Detail">
+            <img src="" id="activeItemImage" alt="Item">
+            <div class="active-item-info">
+              <span id="activeItemTitle">iPhone 12 Pro Max</span>
+              <span id="activeItemPrice">PHP 15,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Area Messages -->
+        <div class="chat-messages-container" id="chatMessagesContainer">
+          <!-- Messages will be dynamically rendered here -->
+          <div class="chat-empty-state" id="chatEmptyState">
+            <div class="chat-empty-icon">💬</div>
+            <h4>No chat selected</h4>
+            <p>Select a seller from the sidebar or click "Chat with Seller" on a listing to start chatting.</p>
+          </div>
+        </div>
+
+        <!-- Suggestion Chips -->
+        <div class="chat-suggestions" id="chatSuggestions" style="display: none;">
+          <button type="button" class="suggestion-chip">Is this still available?</button>
+          <button type="button" class="suggestion-chip">Can we meet up today?</button>
+          <button type="button" class="suggestion-chip">Is the price negotiable?</button>
+          <button type="button" class="suggestion-chip">What is the battery health?</button>
+        </div>
+
+        <!-- Input Area -->
+        <form class="chat-input-area" id="chatInputArea" style="display: none;">
+          <input type="text" id="chatInputField" placeholder="Type a message..." autocomplete="off">
+          <button type="submit" class="btn-send-chat" id="btnSendChat" title="Send Message">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Floating Bubble (when minimized) -->
+  <button class="chat-floating-bubble" id="chatFloatingBubble">
+    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+    </svg>
+    <span class="badge" id="chatFloatingBadge" style="display: none;">0</span>
+  </button>
+
+  <script src="app.js?v=9"></script>
+</body>
+</html>
