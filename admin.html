@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Management Console | M&M MOBILE STORE</title>
+  <link rel="stylesheet" href="style.css?v=17">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Main Premium Header -->
+  <header class="abenson-header">
+    <div class="header-top-row">
+      <a href="admin.html" class="abenson-logo">
+        <span class="logo-circle">M&M</span>
+        <span class="logo-brand-text">ADMIN CONSOLE</span>
+      </a>
+      <div style="flex: 1;"></div>
+      <div class="abenson-header-actions" id="adminLogoutHeader" style="display: none;">
+        <button class="btn-secondary-sm" id="btnAdminLogOut">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
+    
+    <div class="admin-container">
+      
+      <!-- Admin Authentication Panel -->
+      <div id="adminAuthPanel" class="account-card" style="max-width: 400px; margin: 4rem auto;">
+        <h2 class="account-sec-title" style="text-align: center;">Admin Verification</h2>
+        <p class="account-subtitle" style="text-align: center; margin-bottom: 1.5rem;">Access restricted to authorized personnel only.</p>
+        
+        <form id="adminLoginForm" class="auth-form">
+          <div class="form-group-flat">
+            <label for="adminEmail">Admin Email</label>
+            <input type="email" id="adminEmail" required placeholder="admin@mm-mobile.com">
+          </div>
+          <div class="form-group-flat">
+            <label for="adminPassword">Password</label>
+            <input type="password" id="adminPassword" required placeholder="admin123">
+          </div>
+          <div id="adminLoginError" style="color: #d9534f; font-size: 0.85rem; margin-bottom: 0.5rem; display: none;">Invalid admin credentials.</div>
+          <button type="submit" class="btn-primary-block">Verify & Log In</button>
+        </form>
+      </div>
+
+      <!-- Admin Dashboard View -->
+      <div id="adminDashboardView" style="display: none;">
+        <div class="account-card">
+          <div class="dashboard-header">
+            <div>
+              <h2 class="account-sec-title">Admin Management Console</h2>
+              <p class="account-subtitle">Control listings, change order status, monitor inventory, and support customers live.</p>
+            </div>
+          </div>
+
+          <!-- Admin Tabs Grid -->
+          <div class="dashboard-nav-tabs">
+            <button class="admin-tab-btn active" data-admin-tab="products">Manage Products</button>
+            <button class="admin-tab-btn" data-admin-tab="orders">Manage Orders</button>
+            <button class="admin-tab-btn" data-admin-tab="inventory">Inventory Monitor</button>
+            <button class="admin-tab-btn" data-admin-tab="chats">Live Customer Chat</button>
+          </div>
+
+          <!-- Manage Products Panel -->
+          <div class="admin-panel active" id="adminProductsPanel">
+            <div class="admin-panel-action-header">
+              <h3>Smartphone Catalog Manager</h3>
+              <button class="btn-primary" id="btnAdminAddProduct">Add New Smartphone</button>
+            </div>
+            <div class="admin-products-list" id="adminProductsList">
+              <!-- Products rendered here via JS -->
+            </div>
+          </div>
+
+          <!-- Manage Orders Panel -->
+          <div class="admin-panel" id="adminOrdersPanel">
+            <h3>Customer Orders Ledger</h3>
+            <div class="admin-orders-table-wrapper">
+              <table class="admin-orders-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer / Date</th>
+                    <th>Product Details</th>
+                    <th>Total Pay</th>
+                    <th>Ship Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersList">
+                  <!-- Orders rendered here via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Inventory Panel -->
+          <div class="admin-panel" id="adminInventoryPanel">
+            <h3>Smartphone Stock Levels</h3>
+            <div class="admin-inventory-list" id="adminInventoryList">
+              <!-- Inventory rendered here via JS -->
+            </div>
+          </div>
+
+          <!-- Live Customer Chat Panel -->
+          <div class="admin-panel" id="adminChatsPanel">
+            <h3>Live Customer Chat Support</h3>
+            <div class="admin-chats-split">
+              <div class="admin-chats-sidebar">
+                <div class="admin-chats-list" id="adminChatsList">
+                  <!-- Conversations list rendered here -->
+                </div>
+              </div>
+              <div class="admin-chats-main">
+                <div class="admin-chats-header" id="adminChatActiveHeader" style="display: none;">
+                  <span id="adminActiveChatName">Customer Name</span>
+                </div>
+                <div class="admin-chat-messages" id="adminChatMessagesContainer">
+                  <div class="admin-chat-empty">Select a conversation to start chatting</div>
+                </div>
+                <form class="admin-chat-input-row" id="adminChatInputForm" style="display: none;">
+                  <input type="text" id="adminChatInputField" placeholder="Type a response..." autocomplete="off">
+                  <button type="submit" class="btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.85rem;">Send</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Sell / Add Listing Modal (reused in admin product editing/adding) -->
+  <div class="modal-overlay" id="sellModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">List Your Phone</h2>
+        <button class="btn-close-modal" id="btnCloseSellModal">&times;</button>
+      </div>
+      <form id="sellForm" class="checkout-form">
+        <div class="form-group-flat">
+          <label for="phoneTitle">Phone Title / Model Name</label>
+          <input type="text" id="phoneTitle" required placeholder="e.g. iPhone 15 Pro Max">
+        </div>
+        <div class="form-row">
+          <div class="form-group-flat">
+            <label for="phoneBrand">Brand Category</label>
+            <select id="phoneBrand" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="apple">Apple</option>
+              <option value="samsung">Samsung</option>
+              <option value="xiaomi">Xiaomi</option>
+              <option value="oppo">OPPO</option>
+              <option value="vivo">Vivo</option>
+              <option value="realme">Realme</option>
+              <option value="other">Other Brands</option>
+            </select>
+          </div>
+          <div class="form-group-flat">
+            <label for="phonePrice">Selling Price (₱)</label>
+            <input type="number" id="phonePrice" required placeholder="e.g. 55000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-flat">
+            <label for="phoneStorage">Storage Option</label>
+            <select id="phoneStorage" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="128gb">128GB</option>
+              <option value="256gb">256GB</option>
+              <option value="512gb">512GB</option>
+              <option value="1tb">1TB</option>
+            </select>
+          </div>
+          <div class="form-group-flat">
+            <label for="phoneRAM">RAM</label>
+            <select id="phoneRAM" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="4gb">4GB</option>
+              <option value="6gb">6GB</option>
+              <option value="8gb">8GB</option>
+              <option value="12gb">12GB</option>
+              <option value="16gb">16GB</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-flat">
+            <label for="phoneCondition">Condition</label>
+            <select id="phoneCondition" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="Brand New">Brand New</option>
+              <option value="Like New">Like New</option>
+              <option value="Lightly Used">Lightly Used</option>
+            </select>
+          </div>
+          <div class="form-group-flat">
+            <label for="phoneSeller">Seller Name</label>
+            <input type="text" id="phoneSeller" required placeholder="Your Name" value="M&M Mobile Seller">
+          </div>
+        </div>
+        <div class="form-group-flat">
+          <label for="phoneImage">Image URL</label>
+          <input type="text" id="phoneImage" placeholder="https://images.unsplash.com/... or keep blank for default" value="">
+        </div>
+        <div class="form-group-flat">
+          <label for="phoneDesc">Description</label>
+          <textarea id="phoneDesc" required rows="3" placeholder="Describe the phone features, battery health, issues..."></textarea>
+        </div>
+        <div class="form-group-flat" style="flex-direction: row; align-items: center; gap: 0.5rem; display: flex; margin-bottom: 1rem;">
+          <input type="checkbox" id="phone5G" checked style="width: auto; margin: 0;">
+          <label for="phone5G" style="margin-bottom: 0; cursor: pointer;">Supports 5G connectivity</label>
+        </div>
+        <div class="form-footer">
+          <button type="button" class="btn-secondary" id="btnCancelSell">Cancel</button>
+          <button type="submit" class="btn-primary">Submit Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <script src="admin.js?v=19"></script>
+</body>
+</html>

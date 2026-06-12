@@ -302,8 +302,11 @@ let listings = [];
 let chats = [];
 let cartItems = [];
 let activeChatId = null;
+let adminActiveChatId = null;
 let currentDetailListingId = null;
 let typingTimeout = null;
+let isFirebaseActive = false;
+let db = null;
 
 let currentFilterCategory = "all";
 let currentShowcaseFilter = "all";
@@ -351,19 +354,7 @@ const STATIC_PAGES = {
 };
 
 // Default System Chats
-const DEFAULT_CHATS = [
-  {
-    id: "chat_support",
-    listingId: null,
-    seller: "M&M Mobile Support",
-    avatarColor: "hsl(220, 80%, 45%)",
-    messages: [
-      { sender: "seller", text: "Hello! Welcome to M&M MOBILE STORE. I'm your mobile shopping assistant. How can I help you today?", time: "Just now" }
-    ],
-    unread: false,
-    isSupport: true
-  }
-];
+const DEFAULT_CHATS = [];
 
 // Initialize Application
 function initApp() {
@@ -431,6 +422,10 @@ function initApp() {
   if (storedUser) {
     try {
       currentUser = JSON.parse(storedUser);
+      if (currentUser && currentUser.isAdmin) {
+        window.location.href = 'admin.html';
+        return;
+      }
     } catch (e) {
       currentUser = null;
     }
@@ -464,7 +459,7 @@ function initApp() {
     cartItems = [];
   }
 
-  // Load chats
+  // Load chats (with Firebase Realtime Database fallback)
   const storedChats = localStorage.getItem('abenson_chats');
   if (storedChats) {
     try {
@@ -477,9 +472,64 @@ function initApp() {
     localStorage.setItem('abenson_chats', JSON.stringify(chats));
   }
 
+  // Check if Firebase is available
+  if (typeof firebase !== 'undefined') {
+    try {
+      const firebaseConfig = {
+        apiKey: "AIzaSyAe5qGSrGQoEa1rdibUl9FUyMiKCYhqx2k",
+        authDomain: "anime-studio2026.firebaseapp.com",
+        projectId: "anime-studio2026",
+        storageBucket: "anime-studio2026.firebasestorage.app",
+        messagingSenderId: "295294896512",
+        appId: "1:295294896512:web:320b5853af7f2b406a5965",
+        databaseURL: "https://anime-studio2026-default-rtdb.asia-southeast1.firebasedatabase.app"
+      };
+
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+
+      db = firebase.database();
+      isFirebaseActive = true;
+      console.log("Firebase Database is active with explicit config!");
+
+      // Sync active chats from database in real-time
+      db.ref('chats').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const remoteChats = [];
+          Object.keys(data).forEach(key => {
+            if (data[key]) remoteChats.push(data[key]);
+          });
+          chats = remoteChats;
+          localStorage.setItem('abenson_chats', JSON.stringify(chats));
+          
+          // Trigger UI updates
+          updateUnreadBadges();
+          renderConversations();
+          if (activeChatId) renderActiveChatMessages();
+          
+          const adminChatsPanel = document.getElementById('adminChatsPanel');
+          if (adminChatsPanel && adminChatsPanel.classList.contains('active') && (currentUser && currentUser.isAdmin)) {
+            renderAdminChats();
+            renderAdminChatMessages();
+          }
+        } else {
+          // Initialize DB with defaults if empty
+          DEFAULT_CHATS.forEach(c => {
+            db.ref('chats/' + c.id).set(c);
+          });
+        }
+      });
+    } catch (e) {
+      console.error("Firebase database init failed:", e);
+    }
+  }
+
   setupEventListeners();
   renderListings();
   updateUnreadBadges();
+  ensureUserSupportChatExists();
   renderConversations();
   syncAccountDashboard();
   renderCartDrawer();
@@ -567,7 +617,6 @@ function setupEventListeners() {
       // Hide all panels
       document.getElementById('homepageContent').style.display = 'none';
       document.getElementById('accountContent').style.display = 'none';
-      document.getElementById('adminContent').style.display = 'none';
 
       if (tabId === 'navHome') {
         document.getElementById('homepageContent').style.display = 'block';
@@ -579,11 +628,6 @@ function setupEventListeners() {
       } else if (tabId === 'navProfile') {
         document.getElementById('accountContent').style.display = 'block';
         syncAccountDashboard();
-      } else if (tabId === 'navAdmin') {
-        document.getElementById('adminContent').style.display = 'block';
-        renderAdminProducts();
-        renderAdminOrders();
-        renderAdminInventory();
       }
     });
   });
@@ -633,7 +677,8 @@ function setupEventListeners() {
   const chatFloatingBubble = document.getElementById('chatFloatingBubble');
   chatFloatingBubble.addEventListener('click', () => {
     toggleChatWidget(true);
-    if (!activeChatId) selectConversation("chat_support");
+    const mySupportChatId = ensureUserSupportChatExists();
+    if (!activeChatId) selectConversation(mySupportChatId);
   });
   document.getElementById('btnMinimizeChat').addEventListener('click', () => toggleChatWidget(false));
   document.getElementById('btnCloseChat').addEventListener('click', () => toggleChatWidget(false));
@@ -733,6 +778,9 @@ function setupEventListeners() {
       } else if (targetPanel === 'inventory') {
         document.getElementById('adminInventoryPanel').classList.add('active');
         renderAdminInventory();
+      } else if (targetPanel === 'chats') {
+        document.getElementById('adminChatsPanel').classList.add('active');
+        renderAdminChats();
       }
     });
   });
@@ -764,6 +812,12 @@ function setupEventListeners() {
   document.getElementById('btnCloseInfoModalFooter').addEventListener('click', () => {
     document.getElementById('infoModal').classList.remove('active');
   });
+
+  // Admin authentication listener
+  document.getElementById('adminLoginForm').addEventListener('submit', handleAdminLogin);
+  
+  // Admin Chat input listener
+  document.getElementById('adminChatInputForm').addEventListener('submit', handleSendAdminChatMessage);
 }
 
 // Reset Filters
@@ -1250,20 +1304,39 @@ function handleAuthFormSubmit(e) {
   const isRegister = document.getElementById('btnAuthSubmit').textContent.includes('Create');
   const name = document.getElementById('authName').value.trim() || "User Client";
 
+  const isAdmin = email.toLowerCase() === 'admin@mm-mobile.com' && password === 'admin123';
+
   currentUser = {
     email,
-    name: isRegister ? name : email.split('@')[0]
+    name: isRegister ? name : email.split('@')[0],
+    isAdmin: isAdmin
   };
 
   localStorage.setItem('mm_user', JSON.stringify(currentUser));
   document.getElementById('authForm').reset();
+  
+  if (isAdmin) {
+    window.location.href = 'admin.html';
+    return;
+  }
+  
+  // Initialize and switch to the authenticated user's support chat
+  const mySupportChatId = ensureUserSupportChatExists();
+  activeChatId = mySupportChatId;
+  
   syncAccountDashboard();
+  renderConversations();
+  renderActiveChatMessages();
 }
 
 function handleLogOut() {
   currentUser = null;
   localStorage.removeItem('mm_user');
+  activeChatId = null;
+  adminActiveChatId = null;
   syncAccountDashboard();
+  ensureUserSupportChatExists();
+  renderConversations();
 }
 
 // Sync UI of dashboard page
@@ -1684,7 +1757,20 @@ function renderConversations() {
   const container = document.getElementById('chatConversationsList');
   container.innerHTML = '';
   
-  const filteredChats = chats.filter(chat => {
+  const buyerEmail = currentUser ? currentUser.email : "guest@mm-mobile.com";
+  const buyerSession = sessionStorage.getItem('mm_guest_id') || '';
+  const mySupportChatId = getCurrentUserSupportChatId();
+
+  // Filter chats to show only my support chat or listing chats where I am the buyer
+  const myChats = chats.filter(chat => {
+    if (chat.isSupport) {
+      return chat.id === mySupportChatId;
+    } else {
+      return chat.buyerEmail === buyerEmail || (buyerEmail === "guest@mm-mobile.com" && chat.buyerSession === buyerSession);
+    }
+  });
+
+  const filteredChats = myChats.filter(chat => {
     return chat.seller.toLowerCase().includes(query);
   });
   
@@ -1863,30 +1949,46 @@ function sendDirectMessage(text) {
   const now = new Date();
   const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   
-  chat.messages.push({
+  const newMessage = {
     sender: "buyer",
     text: text,
     time: timeStr
-  });
+  };
   
-  localStorage.setItem('abenson_chats', JSON.stringify(chats));
-  renderActiveChatMessages();
-  renderConversations();
+  chat.messages.push(newMessage);
   
-  triggerAutoReply(chat, text);
+  if (isFirebaseActive) {
+    db.ref('chats/' + chat.id).set(chat).then(() => {
+      triggerAutoReply(chat, text);
+    });
+  } else {
+    localStorage.setItem('abenson_chats', JSON.stringify(chats));
+    renderActiveChatMessages();
+    renderConversations();
+    triggerAutoReply(chat, text);
+  }
 }
 
 function openChatWithSeller(listingId) {
   const item = listings.find(l => l.id === listingId);
   if (!item) return;
   
-  let chat = chats.find(c => c.listingId === listingId);
+  const buyerEmail = currentUser ? currentUser.email : "guest@mm-mobile.com";
+  const buyerName = currentUser ? currentUser.name : "Guest";
+  const buyerSession = sessionStorage.getItem('mm_guest_id') || 'guest_temp';
+  
+  // Find if listing chat already exists for this specific buyer
+  let chat = chats.find(c => c.listingId === listingId && 
+                             (c.buyerEmail === buyerEmail || (buyerEmail === "guest@mm-mobile.com" && c.buyerSession === buyerSession)));
   
   if (!chat) {
     chat = {
-      id: "chat_" + Date.now(),
+      id: "chat_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
       listingId: listingId,
       seller: item.seller,
+      buyerName: buyerName,
+      buyerEmail: buyerEmail,
+      buyerSession: buyerSession,
       avatarColor: item.avatarColor || "hsl(220, 60%, 45%)",
       messages: [
         { sender: "seller", text: `Hi! Thanks for your interest in my ${item.title}. How can I help you?`, time: "Just now" }
@@ -1895,7 +1997,12 @@ function openChatWithSeller(listingId) {
       isSupport: false
     };
     chats.unshift(chat);
-    localStorage.setItem('abenson_chats', JSON.stringify(chats));
+    
+    if (isFirebaseActive) {
+      db.ref('chats/' + chat.id).set(chat);
+    } else {
+      localStorage.setItem('abenson_chats', JSON.stringify(chats));
+    }
   }
   
   toggleChatWidget(true);
@@ -1905,6 +2012,11 @@ function openChatWithSeller(listingId) {
 function triggerAutoReply(chat, buyerMessage) {
   if (typingTimeout) clearTimeout(typingTimeout);
   
+  // Do not auto-reply if admin dashboard chats view is active
+  const adminChatsPanel = document.getElementById('adminChatsPanel');
+  const isAdminViewingChats = adminChatsPanel && adminChatsPanel.classList.contains('active') && (currentUser && currentUser.isAdmin);
+  if (isAdminViewingChats) return;
+
   typingTimeout = setTimeout(() => {
     const container = document.getElementById('chatMessagesContainer');
     
@@ -1920,16 +2032,20 @@ function triggerAutoReply(chat, buyerMessage) {
         <span class="typing-dot"></span>
       </div>
     `;
-    container.appendChild(typingRow);
-    container.scrollTop = container.scrollHeight;
+    if (container) {
+      container.appendChild(typingRow);
+      container.scrollTop = container.scrollHeight;
+    }
     
-    document.getElementById('activeChatStatus').textContent = "Typing...";
+    const statusEl = document.getElementById('activeChatStatus');
+    if (statusEl) statusEl.textContent = "Typing...";
     
     setTimeout(() => {
       const typingEl = document.querySelector('.msg-row.typing');
       if (typingEl) typingEl.remove();
       
-      document.getElementById('activeChatStatus').textContent = "Online";
+      const statusEl2 = document.getElementById('activeChatStatus');
+      if (statusEl2) statusEl2.textContent = "Online";
       
       let replyText = "";
       if (chat.isSupport) {
@@ -1953,14 +2069,18 @@ function triggerAutoReply(chat, buyerMessage) {
         chat.unread = true;
       }
       
-      localStorage.setItem('abenson_chats', JSON.stringify(chats));
-      updateUnreadBadges();
-      renderConversations();
-      
-      if (activeChatId === chat.id) {
-        renderActiveChatMessages();
+      if (isFirebaseActive) {
+        db.ref('chats/' + chat.id).set(chat);
       } else {
-        showToast(`New message from ${chat.seller}!`);
+        localStorage.setItem('abenson_chats', JSON.stringify(chats));
+        updateUnreadBadges();
+        renderConversations();
+        
+        if (activeChatId === chat.id) {
+          renderActiveChatMessages();
+        } else {
+          showToast(`New message from ${chat.seller}!`);
+        }
       }
     }, 1200);
   }, 600);
@@ -2012,6 +2132,53 @@ function getSellerResponse(msg, sellerName, itemTitle) {
   }
   
   return `Thanks for your inquiry about the ${itemTitle}. Let me know if you would like to arrange meetup details.`;
+}
+
+
+
+// Helper Functions for Buyer-Specific Support Chats
+function getCurrentUserSupportChatId() {
+  if (currentUser) {
+    const cleanId = currentUser.email.replace(/[^a-zA-Z0-9]/g, '_');
+    return `chat_support_${cleanId}`;
+  }
+  
+  // Guest user fallback (persistent in current browser session)
+  let guestId = sessionStorage.getItem('mm_guest_id');
+  if (!guestId) {
+    guestId = 'guest_' + Math.floor(1000 + Math.random() * 9000);
+    sessionStorage.setItem('mm_guest_id', guestId);
+  }
+  return `chat_support_${guestId}`;
+}
+
+function ensureUserSupportChatExists() {
+  const chatId = getCurrentUserSupportChatId();
+  let chat = chats.find(c => c.id === chatId);
+  if (!chat) {
+    const customerName = currentUser ? currentUser.name : (sessionStorage.getItem('mm_guest_id') ? "Guest (" + sessionStorage.getItem('mm_guest_id').split('_')[1] + ")" : "Guest User");
+    const customerEmail = currentUser ? currentUser.email : "guest@mm-mobile.com";
+    chat = {
+      id: chatId,
+      listingId: null,
+      seller: "M&M Mobile Support",
+      customerName: customerName,
+      customerEmail: customerEmail,
+      avatarColor: "hsl(220, 80%, 45%)",
+      messages: [
+        { sender: "seller", text: "Hello! Welcome to M&M MOBILE STORE. I'm your mobile shopping assistant. How can I help you today?", time: "Just now" }
+      ],
+      unread: false,
+      isSupport: true
+    };
+    chats.unshift(chat);
+    if (isFirebaseActive) {
+      db.ref('chats/' + chatId).set(chat);
+    } else {
+      localStorage.setItem('abenson_chats', JSON.stringify(chats));
+    }
+  }
+  return chatId;
 }
 
 document.addEventListener('DOMContentLoaded', initApp);

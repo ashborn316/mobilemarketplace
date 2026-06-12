@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>M&M MOBILE STORE | Premium Smartphones & Deals</title>
   <meta name="description" content="Shop the best deals on iPhones, Samsung, and other leading smartphone brands at M&M MOBILE STORE. Fast next-day delivery and secure payment.">
-  <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="style.css?v=17">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -306,67 +306,7 @@
       </div>
     </div>
 
-    <!-- ADMIN PANEL CONTENT WRAPPER -->
-    <div id="adminContent" style="display: none;">
-      <div class="admin-container">
-        <div class="account-card">
-          <div class="dashboard-header">
-            <div>
-              <h2 class="account-sec-title">Admin Management Console</h2>
-              <p class="account-subtitle">Control listings, change order status, and track smartphone inventory levels.</p>
-            </div>
-          </div>
 
-          <!-- Admin Tabs Grid -->
-          <div class="dashboard-nav-tabs">
-            <button class="admin-tab-btn active" data-admin-tab="products">Manage Products</button>
-            <button class="admin-tab-btn" data-admin-tab="orders">Manage Orders</button>
-            <button class="admin-tab-btn" data-admin-tab="inventory">Inventory Monitor</button>
-          </div>
-
-          <!-- Manage Products Panel -->
-          <div class="admin-panel active" id="adminProductsPanel">
-            <div class="admin-panel-action-header">
-              <h3>Smartphone Catalog Manager</h3>
-              <button class="btn-primary" id="btnAdminAddProduct">Add New Smartphone</button>
-            </div>
-            <div class="admin-products-list" id="adminProductsList">
-              <!-- Products rendered here via JS -->
-            </div>
-          </div>
-
-          <!-- Manage Orders Panel -->
-          <div class="admin-panel" id="adminOrdersPanel">
-            <h3>Customer Orders Ledger</h3>
-            <div class="admin-orders-table-wrapper">
-              <table class="admin-orders-table">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer / Date</th>
-                    <th>Product Details</th>
-                    <th>Total Pay</th>
-                    <th>Ship Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="adminOrdersList">
-                  <!-- Orders rendered here via JS -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Inventory Panel -->
-          <div class="admin-panel" id="adminInventoryPanel">
-            <h3>Smartphone Stock Levels</h3>
-            <div class="admin-inventory-list" id="adminInventoryList">
-              <!-- Inventory rendered here via JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </main>
 
@@ -412,10 +352,7 @@
       <div class="tab-icon">👤</div>
       <span class="tab-label">You</span>
     </a>
-    <a href="#" class="nav-tab" id="navAdmin">
-      <div class="tab-icon">🛠️</div>
-      <span class="tab-label">Admin</span>
-    </a>
+
   </footer>
 
   <!-- Site Footer Links -->
@@ -846,6 +783,10 @@
     <span class="btn-text">Back To Top</span>
   </button>
 
-  <script src="app.js?v=16"></script>
+  <!-- Firebase SDKs (Gstatic CDN for both local and hosted use) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <script src="app.js?v=19"></script>
 </body>
 </html>
