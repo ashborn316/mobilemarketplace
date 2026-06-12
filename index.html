@@ -3,265 +3,752 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MobileMarket - Buy & Sell New and Used Cellphones</title>
-  <meta name="description" content="Explore thousands of new and used cellphones for sale. Best prices on iPhones, Samsung, and more. Sell your phone in seconds.">
-  <link rel="stylesheet" href="style.css?v=9">
+  <title>M&M MOBILE STORE | Premium Smartphones & Deals</title>
+  <meta name="description" content="Shop the best deals on iPhones, Samsung, and other leading smartphone brands at M&M MOBILE STORE. Fast next-day delivery and secure payment.">
+  <link rel="stylesheet" href="style.css?v=16">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Premium Header -->
-  <header>
-    <a href="#" class="logo-section" id="logoLink">
-      <div class="logo-icon">C</div>
-      <div class="logo-text">Mobile<span>Market</span></div>
-    </a>
-    
-    <div class="search-container">
-      <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-      </svg>
-      <input type="text" id="searchInput" placeholder="Search for a mobile phone, model or brand...">
-    </div>
-    
-    <div class="header-actions">
-      <button class="btn-sell" id="btnSellPhone">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-        </svg>
-        Sell Phone
-      </button>
-      <button class="btn-icon" title="Notifications" id="btnNotifications">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"></path>
-        </svg>
-      </button>
-      <button class="btn-icon" title="Messages" id="btnMessages" style="position: relative;">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-        </svg>
-        <span class="badge" id="chatBadge" style="display: none;"></span>
-      </button>
-      <button class="btn-icon" title="Profile" id="btnProfile">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path>
-        </svg>
-      </button>
+  <!-- Main Premium Header -->
+  <header class="abenson-header">
+    <div class="header-top-row">
+      <a href="#" class="abenson-logo" id="logoLink">
+        <span class="logo-circle">M&M</span>
+        <span class="logo-brand-text">MOBILE STORE</span>
+      </a>
+      
+      <div class="abenson-search-container">
+        <input type="text" id="searchInput" placeholder="Search in M&M Mobile Store">
+        <button class="abenson-search-btn" id="btnSearchSubmit" aria-label="Search">
+          <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="abenson-header-actions">
+        <button class="btn-icon-cart" title="Cart" id="btnCart">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
+          </svg>
+          <span class="cart-badge" id="cartCount">0</span>
+        </button>
+      </div>
     </div>
   </header>
 
+  <!-- Categories Sub-header -->
+  <nav class="categories-nav">
+    <div class="categories-scroll-wrapper">
+      <a href="#" class="category-link active" data-category="all">Best Deals</a>
+      <a href="#" class="category-link" data-category="apple">iPhone</a>
+      <a href="#" class="category-link" data-category="samsung">Samsung Galaxy</a>
+      <a href="#" class="category-link" data-category="xiaomi">Xiaomi</a>
+      <a href="#" class="category-link" data-category="oppo">OPPO</a>
+      <a href="#" class="category-link" data-category="vivo">Vivo</a>
+      <a href="#" class="category-link" data-category="realme">Realme</a>
+      <a href="#" class="category-link" data-category="other">Other Brands</a>
+    </div>
+  </nav>
+
   <!-- Main Container -->
   <main class="app-container">
-    
-    <!-- Filters Bar -->
-    <section class="filters-bar">
-      <div class="filters-group">
-        <select class="filter-select" id="filterCategory">
-          <option value="all">Mobile Phones</option>
-          <option value="apple">Apple iPhone</option>
-          <option value="samsung">Samsung</option>
-          <option value="other">Other Brands</option>
-        </select>
-        
-        <select class="filter-select" id="filterSort">
-          <option value="best">Sort: Best Match</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="recent">Recently Added</option>
-        </select>
-        
-        <select class="filter-select" id="filterModel">
-          <option value="all">Model</option>
-          <option value="iPhone 15">iPhone 15 Series</option>
-          <option value="iPhone 14">iPhone 14 Series</option>
-          <option value="iPhone 12">iPhone 12 Series</option>
-          <option value="iPhone XS">iPhone XS Series</option>
-        </select>
-        
-        <select class="filter-select" id="filterStorage">
-          <option value="all">Storage</option>
-          <option value="128gb">128GB</option>
-          <option value="256gb">256GB</option>
-          <option value="512gb">512GB</option>
-          <option value="1tb">1TB</option>
-        </select>
-        
-        <select class="filter-select" id="filterCondition">
-          <option value="all">Condition</option>
-          <option value="Brand New">Brand New</option>
-          <option value="Like New">Like New</option>
-          <option value="Lightly Used">Lightly Used</option>
-          <option value="Well Used">Well Used</option>
-        </select>
-      </div>
+
+    <!-- HOMEPAGE CONTENT WRAPPER -->
+    <div id="homepageContent">
       
-      <div class="save-search-container">
-        <span class="save-search-label">Save this search</span>
-        <label class="switch">
-          <input type="checkbox" id="saveSearchToggle">
-          <span class="slider"></span>
-        </label>
+      <!-- Promotional Hero Banners -->
+      <section class="promo-hero-grid">
+        <div class="promo-banner banner-next-day">
+          <div class="banner-content">
+            <span class="banner-tag">EXPRESS</span>
+            <h2>NEXT DAY DELIVERY</h2>
+            <p>Get your smartphones delivered next day in Metro Manila.</p>
+            <div class="banner-bottom-row">
+              <span class="banner-badge">CASH ON DELIVERY</span>
+            </div>
+          </div>
+          <div class="banner-graphics">
+            <div class="delivery-truck-gfx">🚚💨</div>
+          </div>
+        </div>
+
+        <div class="promo-banner banner-installment">
+          <div class="banner-content">
+            <span class="banner-tag-purple">FLEXIBLE</span>
+            <h2>SHOP NOW PAY LATER</h2>
+            <p>Upto 24 months installment options on all premium devices.</p>
+            <div class="bank-logos-strip">
+              <span>BDO</span>
+              <span>BPI</span>
+              <span>Metrobank</span>
+              <span>RCBC</span>
+              <span>PNB</span>
+            </div>
+          </div>
+          <div class="banner-graphics">
+            <div class="installment-gfx">💳✨</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Features Bar -->
+      <section class="features-bar-strip">
+        <div class="feature-item">
+          <div class="feature-icon">💳</div>
+          <div class="feature-details">
+            <strong>Payment Solutions</strong>
+            <span>Installment schemes</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-details">
+            <strong>Same Day Delivery</strong>
+            <span>Express shipping available</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">♻️</div>
+          <div class="feature-details">
+            <strong>Phone Trade-In</strong>
+            <span>Upgrade your old phone</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-details">
+            <strong>Mobile Care</strong>
+            <span>Extended device warranty</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🤝</div>
+          <div class="feature-details">
+            <strong>Business Solutions</strong>
+            <span>Corporate bulk mobile plans</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advanced Search & Filters Container -->
+      <section class="filter-controls-container">
+        <div class="filter-controls-wrapper">
+          <select class="filter-select" id="filterCategory">
+            <option value="all">All Brands</option>
+            <option value="apple">Apple</option>
+            <option value="samsung">Samsung</option>
+            <option value="xiaomi">Xiaomi</option>
+            <option value="oppo">OPPO</option>
+            <option value="vivo">Vivo</option>
+            <option value="realme">Realme</option>
+            <option value="other">Other Brands</option>
+          </select>
+          
+          <select class="filter-select" id="filterSort">
+            <option value="best">Sort: Best Match</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+
+          <select class="filter-select" id="filterCondition">
+            <option value="all">Condition: All</option>
+            <option value="Brand New">Brand New</option>
+            <option value="Like New">Like New</option>
+            <option value="Lightly Used">Lightly Used</option>
+          </select>
+
+          <select class="filter-select" id="filterStorage">
+            <option value="all">Storage: All</option>
+            <option value="128gb">128GB</option>
+            <option value="256gb">256GB</option>
+            <option value="512gb">512GB</option>
+            <option value="1tb">1TB</option>
+          </select>
+
+          <select class="filter-select" id="filterRAM">
+            <option value="all">RAM: All</option>
+            <option value="4gb">4GB</option>
+            <option value="6gb">6GB</option>
+            <option value="8gb">8GB</option>
+            <option value="12gb">12GB</option>
+            <option value="16gb">16GB</option>
+          </select>
+          
+          <div class="price-range-inputs">
+            <input type="number" id="filterMinPrice" placeholder="Min Price ₱" class="price-input">
+            <span class="range-dash">-</span>
+            <input type="number" id="filterMaxPrice" placeholder="Max Price ₱" class="price-input">
+          </div>
+
+          <label class="filter-checkbox-label">
+            <input type="checkbox" id="filter5G">
+            <span>5G Only</span>
+          </label>
+        </div>
+
+        <button class="btn-sell" id="btnSellPhone">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+          </svg>
+          <span>List Your Phone</span>
+        </button>
+      </section>
+
+      <!-- Dynamic Showcase Tabs -->
+      <div class="showcase-tabs-strip">
+        <button class="showcase-tab-btn active" data-showcase="all">All Products</button>
+        <button class="showcase-tab-btn" data-showcase="featured">Featured Smartphones</button>
+        <button class="showcase-tab-btn" data-showcase="new-arrivals">New Arrivals</button>
+        <button class="showcase-tab-btn" data-showcase="best-sellers">Best Sellers</button>
+        <button class="showcase-tab-btn" data-showcase="discounts">Special Offers & Discounts</button>
       </div>
-    </section>
 
-    <!-- Results Header -->
-    <section class="results-header">
-      <h1 class="results-title" id="resultsTitle">10,000+ New and Used Cellphones for Sale in the Philippines | MobileMarket</h1>
-      <p class="results-description">Explore premium options for mobile phones for sale. Find verified listings with detailed specifications and secure local pickup options.</p>
-    </section>
+      <!-- BACK TO SCHOOL Featured Showcase Section -->
+      <section class="back-to-school-section">
+        <div class="bts-header">
+          <h2 class="bts-title" id="showcaseSectionTitle">MOBILE DEALS</h2>
+        </div>
 
-    <!-- Listings Grid -->
-    <section class="listings-grid" id="listingsGrid">
-      <!-- Cards will be dynamically inserted here via JS -->
-    </section>
+        <!-- Listings Grid -->
+        <div class="listings-grid" id="listingsGrid">
+          <!-- Cards will be dynamically inserted here via JS -->
+        </div>
+
+        <div class="see-more-row">
+          <button class="btn-see-more" id="btnSeeMore">See More</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- CUSTOMER ACCOUNT VIEW WRAPPER -->
+    <div id="accountContent" style="display: none;">
+      <div class="account-container">
+        <!-- Auth Screen -->
+        <div id="authPanel" class="account-card">
+          <h2 class="account-sec-title">Welcome to M&M MOBILE STORE</h2>
+          <p class="account-subtitle">Login or register an account to track orders and save your wishlist.</p>
+          
+          <div class="auth-tabs">
+            <button class="auth-tab-btn active" id="btnAuthTabLogin">Login</button>
+            <button class="auth-tab-btn" id="btnAuthTabRegister">Register</button>
+          </div>
+
+          <form id="authForm" class="auth-form">
+            <div class="form-group-flat">
+              <label for="authEmail">Email Address</label>
+              <input type="email" id="authEmail" required placeholder="name@example.com">
+            </div>
+            <div class="form-group-flat">
+              <label for="authPassword">Password</label>
+              <input type="password" id="authPassword" required placeholder="Enter password">
+            </div>
+            <div class="form-group-flat" id="registerNameGroup" style="display: none;">
+              <label for="authName">Full Name</label>
+              <input type="text" id="authName" placeholder="Juan Dela Cruz">
+            </div>
+            
+            <button type="submit" class="btn-primary-block" id="btnAuthSubmit">Sign In</button>
+          </form>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboardPanel" class="account-card" style="display: none;">
+          <div class="dashboard-header">
+            <div>
+              <h2 class="account-sec-title">Hello, <span id="userNameDisplay">Guest</span>!</h2>
+              <p class="account-subtitle" id="userEmailDisplay">guest@mm-mobile.com</p>
+            </div>
+            <button class="btn-secondary-sm" id="btnLogOut">Log Out</button>
+          </div>
+
+          <!-- Account Tabs Grid -->
+          <div class="dashboard-nav-tabs">
+            <button class="dash-tab-btn active" data-dash="wishlist">My Wishlist</button>
+            <button class="dash-tab-btn" data-dash="orders">Order History</button>
+            <button class="dash-tab-btn" data-dash="track">Track Orders</button>
+          </div>
+
+          <!-- Wishlist Panel -->
+          <div class="dash-panel active" id="dashWishlist">
+            <h3 class="dash-panel-title">My Wishlist</h3>
+            <div class="wishlist-grid" id="wishlistContainer">
+              <p class="empty-list-msg">No items in your wishlist yet. Click the heart icon on any smartphone to add it here!</p>
+            </div>
+          </div>
+
+          <!-- Order History Panel -->
+          <div class="dash-panel" id="dashOrders">
+            <h3 class="dash-panel-title">Order History</h3>
+            <div class="orders-list" id="ordersContainer">
+              <p class="empty-list-msg">You haven't placed any orders yet.</p>
+            </div>
+          </div>
+
+          <!-- Track Orders Panel -->
+          <div class="dash-panel" id="dashTrack">
+            <h3 class="dash-panel-title">Track Your Order</h3>
+            <div class="track-form-container">
+              <p class="dash-panel-desc">Enter your Order ID to track the real-time shipping status of your smartphone.</p>
+              <div class="track-input-row">
+                <input type="text" id="trackOrderIdInput" placeholder="e.g. ORD-171818224">
+                <button class="btn-primary" id="btnTrackOrderSearch">Track Status</button>
+              </div>
+              <div id="trackResultBox" class="track-result-box" style="display: none;">
+                <!-- Tracking details render here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN PANEL CONTENT WRAPPER -->
+    <div id="adminContent" style="display: none;">
+      <div class="admin-container">
+        <div class="account-card">
+          <div class="dashboard-header">
+            <div>
+              <h2 class="account-sec-title">Admin Management Console</h2>
+              <p class="account-subtitle">Control listings, change order status, and track smartphone inventory levels.</p>
+            </div>
+          </div>
+
+          <!-- Admin Tabs Grid -->
+          <div class="dashboard-nav-tabs">
+            <button class="admin-tab-btn active" data-admin-tab="products">Manage Products</button>
+            <button class="admin-tab-btn" data-admin-tab="orders">Manage Orders</button>
+            <button class="admin-tab-btn" data-admin-tab="inventory">Inventory Monitor</button>
+          </div>
+
+          <!-- Manage Products Panel -->
+          <div class="admin-panel active" id="adminProductsPanel">
+            <div class="admin-panel-action-header">
+              <h3>Smartphone Catalog Manager</h3>
+              <button class="btn-primary" id="btnAdminAddProduct">Add New Smartphone</button>
+            </div>
+            <div class="admin-products-list" id="adminProductsList">
+              <!-- Products rendered here via JS -->
+            </div>
+          </div>
+
+          <!-- Manage Orders Panel -->
+          <div class="admin-panel" id="adminOrdersPanel">
+            <h3>Customer Orders Ledger</h3>
+            <div class="admin-orders-table-wrapper">
+              <table class="admin-orders-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer / Date</th>
+                    <th>Product Details</th>
+                    <th>Total Pay</th>
+                    <th>Ship Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersList">
+                  <!-- Orders rendered here via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Inventory Panel -->
+          <div class="admin-panel" id="adminInventoryPanel">
+            <h3>Smartphone Stock Levels</h3>
+            <div class="admin-inventory-list" id="adminInventoryList">
+              <!-- Inventory rendered here via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
-  <!-- Sell Phone Modal -->
-  <div class="modal-overlay" id="sellModal">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h2 class="modal-title">List a Phone for Sale</h2>
-        <button class="btn-close-modal" id="btnCloseSellModal">&times;</button>
+  <!-- Slide-out Shopping Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <h2>Shopping Cart</h2>
+      <button class="btn-close-cart" id="btnCloseCartDrawer">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="cartItemsContainer">
+      <!-- Cart items render here dynamically -->
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="cart-summary-row">
+        <span>Subtotal</span>
+        <strong id="cartSubtotalAmount">₱0</strong>
       </div>
-      <form id="sellForm">
-        <div class="form-group">
-          <label for="phoneTitle">Listing Title</label>
-          <input type="text" id="phoneTitle" required placeholder="e.g. iPhone 15 Pro Max 256GB Titanium Blue">
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="phoneBrand">Brand</label>
-            <select id="phoneBrand" required>
-              <option value="apple">Apple</option>
-              <option value="samsung">Samsung</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="phonePrice">Price (PHP)</label>
-            <input type="number" id="phonePrice" required placeholder="e.g. 35000">
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="phoneStorage">Storage</label>
-            <select id="phoneStorage" required>
-              <option value="128gb">128GB</option>
-              <option value="256gb">256GB</option>
-              <option value="512gb">512GB</option>
-              <option value="1tb">1TB</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="phoneCondition">Condition</label>
-            <select id="phoneCondition" required>
-              <option value="Brand New">Brand New</option>
-              <option value="Like New">Like New</option>
-              <option value="Lightly Used">Lightly Used</option>
-              <option value="Well Used">Well Used</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="phoneSeller">Your Name</label>
-          <input type="text" id="phoneSeller" required placeholder="e.g. Juan Dela Cruz">
-        </div>
-        
-        <div class="form-group">
-          <label for="phoneImage">Mock Image Selection</label>
-          <select id="phoneImage" required>
-            <option value="assets/iphone15.png">Blue Titanium iPhone (iPhone 15 style)</option>
-            <option value="assets/iphone14.png">Purple iPhone (iPhone 14 style)</option>
-            <option value="assets/iphone12.png">Boxed iPhone (iPhone 12 style)</option>
-            <option value="assets/iphonexs.png">Case Covered iPhone (XS Max style)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="phoneDesc">Description</label>
-          <textarea id="phoneDesc" rows="3" placeholder="Describe your phone's functionality, inclusions, issues if any..." required></textarea>
-        </div>
-        
-        <div class="form-footer">
-          <button type="button" class="btn-secondary" id="btnCancelSell">Cancel</button>
-          <button type="submit" class="btn-primary">Post Listing</button>
-        </div>
-      </form>
+      <div class="cart-summary-row">
+        <span>Shipping Fee</span>
+        <strong>₱99</strong>
+      </div>
+      <hr class="summary-divider">
+      <div class="cart-summary-row total">
+        <span>Total Cost</span>
+        <strong id="cartTotalAmount">₱0</strong>
+      </div>
+      <button class="btn-primary-block" id="btnCartCheckout" style="margin-top: 1rem;">Proceed to Checkout</button>
     </div>
   </div>
+
+  <!-- Sticky Bottom Navigation Bar -->
+  <footer class="abenson-bottom-nav">
+    <a href="#" class="nav-tab active" id="navHome">
+      <div class="tab-icon">🏠</div>
+      <span class="tab-label">Home</span>
+    </a>
+    <a href="#" class="nav-tab" id="navCategories">
+      <div class="tab-icon">📋</div>
+      <span class="tab-label">Categories</span>
+    </a>
+    <a href="#" class="nav-tab" id="navProfile">
+      <div class="tab-icon">👤</div>
+      <span class="tab-label">You</span>
+    </a>
+    <a href="#" class="nav-tab" id="navAdmin">
+      <div class="tab-icon">🛠️</div>
+      <span class="tab-label">Admin</span>
+    </a>
+  </footer>
+
+  <!-- Site Footer Links -->
+  <footer class="mm-site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>M&M MOBILE STORE</h3>
+        <p>Premium online mobile marketplace in the Philippines. Shop leading smartphones with secure payment and fast shipment.</p>
+        <div class="footer-contacts">
+          <p>📞 <strong>Phone:</strong> +63 917 123 4567</p>
+          <p>📧 <strong>Email:</strong> support@mm-mobile.com</p>
+          <p>🌐 <strong>Facebook:</strong> <a href="#" onclick="showToast('Redirecting to Facebook page... (Simulation)')">fb.com/mmmobilestore</a></p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Important Links</h3>
+        <ul class="footer-links-list">
+          <li><a href="#" class="info-page-link" data-page="about">About Us</a></li>
+          <li><a href="#" class="info-page-link" data-page="privacy">Privacy Policy</a></li>
+          <li><a href="#" class="info-page-link" data-page="terms">Terms & Conditions</a></li>
+          <li><a href="#" class="info-page-link" data-page="refund">Return & Refund Policy</a></li>
+          <li><a href="#" class="info-page-link" data-page="faqs">FAQs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 M&M MOBILE STORE. All Rights Reserved.
+    </div>
+  </footer>
 
   <!-- Detail Modal -->
   <div class="modal-overlay" id="detailModal">
     <div class="modal-container detail-modal">
       <div class="modal-header">
-        <h2 class="modal-title">Product Details</h2>
+        <h2 class="modal-title">Smartphone Details</h2>
         <button class="btn-close-modal" id="btnCloseDetailModal">&times;</button>
       </div>
       <div class="detail-grid">
         <div class="detail-image-sec">
           <img id="detailImage" src="" alt="Phone Detail Image">
         </div>
+        
         <div class="detail-info-sec">
           <div>
-            <h3 id="detailTitle" style="font-size: 1.6rem; margin-bottom: 0.5rem;"></h3>
-            <div id="detailPrice" style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;"></div>
+            <div class="detail-brand-availability">
+              <span id="detailBrandLabel" class="card-brand-label">Brand</span>
+              <span id="detailAvailability" class="availability-badge">In Stock</span>
+            </div>
+            <h3 id="detailTitle" style="font-size: 1.5rem; margin: 0.5rem 0; color: #111111; line-height: 1.2;"></h3>
+            <div id="detailPrice" style="font-size: 1.8rem; font-weight: 800; color: #0c4ea3;"></div>
           </div>
           
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-              <span style="color: var(--text-secondary);">Condition</span>
-              <span id="detailCondition" style="font-weight: 600;"></span>
+          <div class="selectors-row">
+            <div class="selector-group">
+              <span class="selector-title">Storage Options</span>
+              <div class="options-pills" id="detailStorageOptions">
+                <!-- rendered via JS -->
+              </div>
             </div>
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-              <span style="color: var(--text-secondary);">Storage</span>
-              <span id="detailStorage" style="font-weight: 600; text-transform: uppercase;"></span>
+            <div class="selector-group">
+              <span class="selector-title">Color Options</span>
+              <div class="options-pills" id="detailColorOptions">
+                <!-- rendered via JS -->
+              </div>
             </div>
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-              <span style="color: var(--text-secondary);">Seller</span>
-              <span id="detailSeller" style="font-weight: 600;"></span>
-            </div>
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-              <span style="color: var(--text-secondary);">Posted</span>
-              <span id="detailPosted" style="font-weight: 600;"></span>
-            </div>
+          </div>
+
+          <!-- Specifications Table -->
+          <div class="specs-table-container">
+            <span class="section-subtitle">Technical Specifications</span>
+            <table class="specs-table">
+              <tr>
+                <td>Screen Size</td>
+                <td id="specScreen">6.7 inches</td>
+              </tr>
+              <tr>
+                <td>Processor</td>
+                <td id="specProcessor">A18 Pro Bionic</td>
+              </tr>
+              <tr>
+                <td>RAM</td>
+                <td id="specRAM">8 GB</td>
+              </tr>
+              <tr>
+                <td>Storage</td>
+                <td id="specStorage">256 GB</td>
+              </tr>
+              <tr>
+                <td>Camera</td>
+                <td id="specCamera">48MP + 12MP + 12MP</td>
+              </tr>
+              <tr>
+                <td>Battery</td>
+                <td id="specBattery">4500 mAh</td>
+              </tr>
+              <tr>
+                <td>5G Support</td>
+                <td id="spec5G">Yes</td>
+              </tr>
+            </table>
           </div>
 
           <div>
-            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Description</h4>
-            <p id="detailDesc" style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.6;"></p>
+            <h4 style="font-size: 1rem; margin-bottom: 0.25rem; color: #666; font-weight: 600;">Description</h4>
+            <p id="detailDesc" style="color: #333; font-size: 0.88rem; line-height: 1.5;"></p>
           </div>
 
-          <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-            <button class="btn-secondary" style="flex: 1; padding: 0.9rem;" id="btnChatSeller">Chat with Seller</button>
-            <button class="btn-primary" style="flex: 1; padding: 0.9rem;" id="btnBuyNow">Buy Now</button>
+          <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
+            <button class="btn-secondary" style="flex: 1; padding: 0.8rem;" id="btnChatSeller">Chat with Seller</button>
+            <button class="btn-secondary" style="flex: 1; padding: 0.8rem;" id="btnAddToCart">Add to Cart</button>
+            <button class="btn-primary" style="flex: 1.2; padding: 0.8rem;" id="btnBuyNow">Buy Now</button>
           </div>
+        </div>
+      </div>
+
+      <!-- Customer Reviews -->
+      <div class="reviews-section">
+        <h3 class="reviews-section-title">Customer Reviews</h3>
+        <div id="reviewsContainer" class="reviews-container">
+          <!-- Reviews will render here -->
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast Toast -->
-  <div class="toast" id="toast">
-    <span class="toast-icon">✓</span>
-    <span class="toast-message" id="toastMessage">Search saved successfully!</span>
+  <!-- Checkout Page Modal -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">Checkout Order</h2>
+        <button class="btn-close-modal" id="btnCloseCheckoutModal">&times;</button>
+      </div>
+      <form id="checkoutForm" class="checkout-form">
+        <!-- Shipping Information -->
+        <div class="checkout-section">
+          <h3>Shipping Information</h3>
+          <div class="form-group-flat">
+            <label for="shipName">Full Name</label>
+            <input type="text" id="shipName" required placeholder="Juan Dela Cruz">
+          </div>
+          <div class="form-group-flat">
+            <label for="shipAddress">Complete Address</label>
+            <input type="text" id="shipAddress" required placeholder="123 Rizal Ave, Barangay 1, Manila">
+          </div>
+          <div class="form-row">
+            <div class="form-group-flat">
+              <label for="shipPhone">Contact Number</label>
+              <input type="tel" id="shipPhone" required placeholder="09171234567">
+            </div>
+            <div class="form-group-flat">
+              <label for="shipEmail">Email Address</label>
+              <input type="email" id="shipEmail" required placeholder="juan@gmail.com">
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="checkout-section">
+          <h3>Payment Method</h3>
+          <div class="payment-methods-grid">
+            <label class="payment-card-label">
+              <input type="radio" name="paymentMethod" value="GCash" checked>
+              <span class="payment-card-content">
+                <span class="pay-icon">📱</span>
+                <strong>GCash</strong>
+              </span>
+            </label>
+            <label class="payment-card-label">
+              <input type="radio" name="paymentMethod" value="Maya">
+              <span class="payment-card-content">
+                <span class="pay-icon">🟢</span>
+                <strong>Maya</strong>
+              </span>
+            </label>
+            <label class="payment-card-label">
+              <input type="radio" name="paymentMethod" value="Card">
+              <span class="payment-card-content">
+                <span class="pay-icon">💳</span>
+                <strong>Credit / Debit Card</strong>
+              </span>
+            </label>
+            <label class="payment-card-label">
+              <input type="radio" name="paymentMethod" value="COD">
+              <span class="payment-card-content">
+                <span class="pay-icon">💵</span>
+                <strong>Cash on Delivery</strong>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="checkout-section">
+          <h3>Order Summary</h3>
+          <div class="checkout-summary-box">
+            <div class="summary-row">
+              <span id="checkoutItemName">Smartphone Model</span>
+              <strong id="checkoutItemPrice">₱0</strong>
+            </div>
+            <div class="summary-row">
+              <span>Selected Option</span>
+              <span id="checkoutItemSpecs">128GB - Standard Color</span>
+            </div>
+            <hr class="summary-divider">
+            <div class="summary-row">
+              <span>Shipping Fee</span>
+              <span>₱99</span>
+            </div>
+            <div class="summary-row total">
+              <span>Order Total</span>
+              <strong id="checkoutTotalAmount">₱0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <button type="button" class="btn-secondary" id="btnCancelCheckout">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnPlaceOrderSubmit">Place Order</button>
+        </div>
+      </form>
+    </div>
   </div>
+
+  <!-- Policy / Info Dialog Modal -->
+  <div class="modal-overlay" id="infoModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title" id="infoModalTitle">Information Page</h2>
+        <button class="btn-close-modal" id="btnCloseInfoModal">&times;</button>
+      </div>
+      <div class="modal-info-body" id="infoModalBody">
+        <!-- Content injected dynamically -->
+      </div>
+      <div class="form-footer">
+        <button class="btn-secondary" id="btnCloseInfoModalFooter">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sell / Add Listing Modal -->
+  <div class="modal-overlay" id="sellModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">List Your Phone</h2>
+        <button class="btn-close-modal" id="btnCloseSellModal">&times;</button>
+      </div>
+      <form id="sellForm" class="checkout-form">
+        <div class="form-group-flat">
+          <label for="phoneTitle">Phone Title / Model Name</label>
+          <input type="text" id="phoneTitle" required placeholder="e.g. iPhone 15 Pro Max">
+        </div>
+        <div class="form-row">
+          <div class="form-group-flat">
+            <label for="phoneBrand">Brand Category</label>
+            <select id="phoneBrand" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="apple">Apple</option>
+              <option value="samsung">Samsung</option>
+              <option value="xiaomi">Xiaomi</option>
+              <option value="oppo">OPPO</option>
+              <option value="vivo">Vivo</option>
+              <option value="realme">Realme</option>
+              <option value="other">Other Brands</option>
+            </select>
+          </div>
+          <div class="form-group-flat">
+            <label for="phonePrice">Selling Price (₱)</label>
+            <input type="number" id="phonePrice" required placeholder="e.g. 55000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-flat">
+            <label for="phoneStorage">Storage Option</label>
+            <select id="phoneStorage" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="128gb">128GB</option>
+              <option value="256gb">256GB</option>
+              <option value="512gb">512GB</option>
+              <option value="1tb">1TB</option>
+            </select>
+          </div>
+          <div class="form-group-flat">
+            <label for="phoneRAM">RAM</label>
+            <select id="phoneRAM" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="4gb">4GB</option>
+              <option value="6gb">6GB</option>
+              <option value="8gb">8GB</option>
+              <option value="12gb">12GB</option>
+              <option value="16gb">16GB</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group-flat">
+            <label for="phoneCondition">Condition</label>
+            <select id="phoneCondition" class="filter-select" style="width: 100%; border: 1px solid #ddd; padding: 0.65rem;" required>
+              <option value="Brand New">Brand New</option>
+              <option value="Like New">Like New</option>
+              <option value="Lightly Used">Lightly Used</option>
+            </select>
+          </div>
+          <div class="form-group-flat">
+            <label for="phoneSeller">Seller Name</label>
+            <input type="text" id="phoneSeller" required placeholder="Your Name" value="M&M Mobile Seller">
+          </div>
+        </div>
+        <div class="form-group-flat">
+          <label for="phoneImage">Image URL</label>
+          <input type="text" id="phoneImage" placeholder="https://images.unsplash.com/... or keep blank for default" value="">
+        </div>
+        <div class="form-group-flat">
+          <label for="phoneDesc">Description</label>
+          <textarea id="phoneDesc" required rows="3" placeholder="Describe the phone features, battery health, issues..."></textarea>
+        </div>
+        <div class="form-group-flat" style="flex-direction: row; align-items: center; gap: 0.5rem; display: flex; margin-bottom: 1rem;">
+          <input type="checkbox" id="phone5G" checked style="width: auto; margin: 0;">
+          <label for="phone5G" style="margin-bottom: 0; cursor: pointer;">Supports 5G connectivity</label>
+        </div>
+        <div class="form-footer">
+          <button type="button" class="btn-secondary" id="btnCancelSell">Cancel</button>
+          <button type="submit" class="btn-primary">Submit Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
 
   <!-- Live Chat Widget -->
   <div class="chat-widget" id="chatWidget">
-    <!-- Chat Header -->
     <div class="chat-widget-header" id="chatWidgetHeader">
       <div class="chat-header-info">
-        <span class="chat-header-title">Messages</span>
+        <span class="chat-header-title">M&M Support Chat</span>
         <span class="badge" id="chatWidgetBadge" style="display: none;">0</span>
       </div>
       <div class="chat-header-actions">
-        <button class="chat-btn-icon" id="btnExpandChat" title="Expand/Collapse">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6h16.5M3.75 3.75h16.5v16.5H3.75V3.75z" />
-          </svg>
-        </button>
         <button class="chat-btn-icon" id="btnMinimizeChat" title="Minimize">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
@@ -289,7 +776,7 @@
 
       <!-- Active Chat Window -->
       <div class="chat-main" id="chatMain">
-        <!-- Chat Area Head (shows when a conversation is active) -->
+        <!-- Chat Area Head -->
         <div class="chat-active-header" id="chatActiveHeader" style="display: none;">
           <button class="chat-btn-back" id="btnChatBack" title="Back to conversations">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -314,11 +801,10 @@
 
         <!-- Chat Area Messages -->
         <div class="chat-messages-container" id="chatMessagesContainer">
-          <!-- Messages will be dynamically rendered here -->
           <div class="chat-empty-state" id="chatEmptyState">
             <div class="chat-empty-icon">💬</div>
-            <h4>No chat selected</h4>
-            <p>Select a seller from the sidebar or click "Chat with Seller" on a listing to start chatting.</p>
+            <h4>M&M Mobile Support</h4>
+            <p>Select a conversation in the list or ask our support assistant below.</p>
           </div>
         </div>
 
@@ -343,14 +829,23 @@
     </div>
   </div>
 
-  <!-- Chat Floating Bubble (when minimized) -->
-  <button class="chat-floating-bubble" id="chatFloatingBubble">
-    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-    </svg>
+  <!-- Chat Floating Bubble -->
+  <button class="chat-floating-bubble" id="chatFloatingBubble" aria-label="Open support chat">
+    <div class="bubble-avatar-container">
+      <img src="assets/support_agent_avatar.png" alt="M&M Support Agent" class="chat-bubble-avatar">
+      <span class="online-indicator"></span>
+    </div>
     <span class="badge" id="chatFloatingBadge" style="display: none;">0</span>
   </button>
 
-  <script src="app.js?v=9"></script>
+  <!-- Back to Top Button -->
+  <button class="back-to-top-btn" id="btnBackToTop" aria-label="Back to Top">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+    </svg>
+    <span class="btn-text">Back To Top</span>
+  </button>
+
+  <script src="app.js?v=16"></script>
 </body>
 </html>
